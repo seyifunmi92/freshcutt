@@ -14,6 +14,8 @@ import 'package:bloc/bloc.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import '../main.dart';
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class Blog extends StatefulWidget {
   const Blog({Key? key}) : super(key: key);
@@ -52,6 +54,25 @@ class myBlocEvents {
 }
 
 class _BlogState extends State<Blog> {
+  Future<List<Album>> getListData() async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    var myListyy = sharedPreferences.getStringList("listData");
+    //var bodyT = jsonDecode(myListyy);
+    print("my gee - $myListyy");
+    print("gooood");
+    var myDD = List<dynamic>.from(myListyy!);
+    print(myDD.runtimeType);
+    List<Album> _finalList = [];
+    for (var x in myDD) {
+      _finalList.add(Album.fromJson(x));
+    }
+
+    print(_finalList.toList());
+    return _finalList;
+    // List<Album> mine = [];
+    // for (var u in myList) {}
+  }
+
   final _bloc = myBlocEvents();
   final _controller = ScrollController();
   bool darkMode = false;
@@ -67,9 +88,15 @@ class _BlogState extends State<Blog> {
   int postsPerRequest = 20;
   int totalRows = 5;
   bool savedData = false;
+  bool snapError = false;
   late Future<List<Album>> customerPictures;
+  void setFuture2() {
+    customerPictures2 = getListData();
+  }
+
+  late Future<List<Album>> customerPictures2;
+
   void setfuture() {
-    //late Future<List<Album>> customerPictures;
     customerPictures = ServiceClass().getPhotos(2);
   }
 
@@ -89,8 +116,10 @@ class _BlogState extends State<Blog> {
     //   },
     // );
     setfuture();
-    mycustomerData();
-    mytList();
+    setFuture2();
+    //mycustomerData();
+    //mytList();
+    getListData();
     setNewData();
     _controller.addListener(() {
       if (_controller.position.maxScrollExtent == _controller.offset) {
@@ -115,7 +144,7 @@ class _BlogState extends State<Blog> {
         children: [
           Expanded(
             child: FutureBuilder<List<Album>>(
-                future: customerPictures,
+                future: snapError ? customerPictures2 : customerPictures,
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return Center(
@@ -145,25 +174,24 @@ class _BlogState extends State<Blog> {
                       ),
                     );
                   } else if (snapshot.hasError) {
-                    return Center(
-                      child: Column(
-                        children: [
-                          SizedBox(
-                            height: _height * .4,
-                          ),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          const Text(
-                            "An Error Occured...",
-                            style: TextStyle(
-                              color: Colors.black54,
-                              fontSize: 20,
-                              letterSpacing: 0,
-                            ),
-                          )
-                        ],
-                      ),
+                    snapError = true;
+                    return FutureBuilder<List<Album>>(
+                      future: customerPictures2,
+                      builder: (context, snapshot) {
+                        if (snapshot.hasData) {
+                          print("There is data o");
+                          return ListView.builder(
+                            itemCount: snapshot.data!.length,
+                            itemBuilder: (BuildContext context, int index) {
+                              return ListTile(
+                                title:
+                                    Text(snapshot.data![index].id.toString()),
+                              );
+                            },
+                          );
+                        } else
+                          return Text(snapshot.error.toString());
+                      },
                     );
                   } else if (snapshot.hasData) {
                     return ListView.builder(
@@ -184,64 +212,72 @@ class _BlogState extends State<Blog> {
                                           mainAxisAlignment:
                                               MainAxisAlignment.start,
                                           children: [
-                                            Image.network(
-                                              snapshot.data![index].thumbnailUrl
+                                            CachedNetworkImage(
+                                              imageUrl: snapshot
+                                                  .data![index].thumbnailUrl
                                                   .toString(),
                                               height: 100,
                                             ),
                                             const SizedBox(
                                               width: 50,
                                             ),
-                                            Image.network(
-                                              snapshot.data![index].thumbnailUrl
+                                            CachedNetworkImage(
+                                              imageUrl: snapshot
+                                                  .data![index].thumbnailUrl
                                                   .toString(),
                                               height: 100,
                                             ),
                                             const SizedBox(
                                               width: 50,
                                             ),
-                                            Image.network(
-                                              snapshot.data![index].thumbnailUrl
+                                            CachedNetworkImage(
+                                              imageUrl: snapshot
+                                                  .data![index].thumbnailUrl
                                                   .toString(),
                                               height: 100,
                                             ),
                                             const SizedBox(
                                               width: 50,
                                             ),
-                                            Image.network(
-                                              snapshot.data![index].thumbnailUrl
+                                            CachedNetworkImage(
+                                              imageUrl: snapshot
+                                                  .data![index].thumbnailUrl
                                                   .toString(),
                                               height: 100,
                                             ),
                                             const SizedBox(
                                               width: 50,
                                             ),
-                                            Image.network(
-                                              snapshot.data![index].thumbnailUrl
+                                            CachedNetworkImage(
+                                              imageUrl: snapshot
+                                                  .data![index].thumbnailUrl
                                                   .toString(),
                                               height: 100,
                                             ),
                                             const SizedBox(
                                               width: 50,
                                             ),
-                                            Image.network(
-                                              snapshot.data![index].thumbnailUrl
+                                            CachedNetworkImage(
+                                              imageUrl: snapshot
+                                                  .data![index].thumbnailUrl
                                                   .toString(),
                                               height: 100,
                                             ),
                                             const SizedBox(
                                               width: 50,
                                             ),
-                                            Image.network(
-                                              snapshot.data![index].thumbnailUrl
+                                            CachedNetworkImage(
+                                              imageUrl: snapshot
+                                                  .data![index].thumbnailUrl
                                                   .toString(),
                                               height: 100,
                                             ),
                                             const SizedBox(
                                               width: 50,
                                             ),
-                                            Image.network(
-                                              snapshot.data![index].thumbnailUrl
+                                            CachedNetworkImage(
+                                              imageUrl: snapshot
+                                                  .data![index].thumbnailUrl
                                                   .toString(),
                                               height: 100,
                                             ),

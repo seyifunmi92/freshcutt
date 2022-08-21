@@ -1,12 +1,10 @@
 import 'dart:async';
-
 import 'package:cypress/constants/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart';
 import 'package:bloc/bloc.dart';
-
 import '../blog/blog.dart';
 
 class Splash2 extends StatefulWidget {
