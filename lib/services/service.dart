@@ -19,16 +19,25 @@ class ServiceClass extends ChangeNotifier {
       HttpHeaders.authorizationHeader: "",
       "Content-Type": "",
     };
-
     var mydata = Uri.parse(BaseUrl + "/photos?albumId=$albumId");
     final response = await http.get(mydata);
     print("Hello bro..Here is the response - ${response.body}");
     if (response.statusCode == 200) {
-      print("This is successful bro");
-      print("album");
       print(response.statusCode);
       var myresponse = jsonDecode(response.body);
+      var bodyT = jsonDecode(response.body);
+      List<Album> _listy = [];
+      for (var y in bodyT) {
+        _listy.add(Album.fromJson(y));
+      }
+      print("seyyyeee - $bodyT");
+      SharedPreferences sharedPreferences =
+          await SharedPreferences.getInstance();
+      sharedPreferences.setStringList("listData", [bodyT.toString()]);
+      var myListData = sharedPreferences.getStringList("listData");
+      print("You don save am bro - $myListData");
       List<Album> _list = [];
+      print(myresponse.runtimeType);
       for (var u in myresponse) {
         _list.add(Album.fromJson(u));
       }
@@ -71,9 +80,6 @@ class ServiceClass extends ChangeNotifier {
     final response = await http.get(mydata);
     print("Hello bro..Here is the response - ${response.body}");
     if (response.statusCode == 200) {
-      SharedPreferences sharedPreferences =
-          await SharedPreferences.getInstance();
-      await SharedPreferences.getInstance();
       print("This is successful bro");
       var myresponse = jsonDecode(response.body);
       List<CustomerData> mylist = [];
