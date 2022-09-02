@@ -1,3 +1,4 @@
+import 'package:cypress/blog/freshcutt.dart';
 import 'package:cypress/services/service.dart';
 import 'package:cypress/splashscreen/splashscreen.dart';
 import 'package:flutter/material.dart';
@@ -6,7 +7,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart';
 import 'package:bloc/bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'blog/blog.dart';
 
 void main() {
   runApp(ChangeNotifierProvider(
@@ -22,21 +22,22 @@ class Home extends StatefulWidget {
 
   @override
   _HomeState createState() => _HomeState();
-  static _HomeState of(BuildContext context) =>
-      context.findAncestorStateOfType<_HomeState>()!;
+  //static _HomeState of(BuildContext context) =>
+  // context.findAncestorStateOfType<_HomeState>()!;
 }
 
 class _HomeState extends State<Home> {
-  ThemeMode _themeMode = ThemeMode.system;
+  //ThemeMode _themeMode = ThemeMode.system;
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(
+        //canvasColor: Colors.transparent,
         primaryColor: Colors.white,
       ),
       darkTheme: ThemeData.dark(),
-      themeMode: _themeMode,
+      //themeMode: _themeMode,
       debugShowCheckedModeBanner: false,
       title: "Text",
       home: Splash(),
@@ -45,7 +46,7 @@ class _HomeState extends State<Home> {
 
   void changeTheme(ThemeMode _myTheme) {
     setState(() {
-      _themeMode = _myTheme;
+      // _themeMode = _myTheme;
     });
   }
 }

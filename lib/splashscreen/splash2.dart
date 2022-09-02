@@ -1,11 +1,12 @@
 import 'dart:async';
+import 'package:cypress/blog/freshcutt.dart';
 import 'package:cypress/constants/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart';
 import 'package:bloc/bloc.dart';
-import '../blog/blog.dart';
+
 
 class Splash2 extends StatefulWidget {
   const Splash2({Key? key}) : super(key: key);
@@ -27,7 +28,7 @@ class _Splash2State extends State<Splash2> {
         PageRouteBuilder(
             maintainState: true,
             opaque: true,
-            pageBuilder: (context, _, __) => Blog(),
+            pageBuilder: (context, _, __) => FreshCutt(),
             transitionDuration: const Duration(seconds: 1),
             transitionsBuilder:
                 (context, animation, secondaryAnimation, child) {
@@ -46,23 +47,43 @@ class _Splash2State extends State<Splash2> {
 
   @override
   Widget build(BuildContext context) {
+    double _width = MediaQuery.of(context).size.width;
+    double _height = MediaQuery.of(context).size.height;
     return Scaffold(
-      //backgroundColor: Colors.black12,
-      body: Column(
-        children: [
-          SizedBox(
-            height: MediaQuery.of(context).size.height * .4,
-          ),
-          Image.asset("lib/assets/cy.jpg"),
-          SizedBox(
-            height: MediaQuery.of(context).size.height * .2,
-          ),
-          CircularProgressIndicator(
-            strokeWidth: 10,
-            color: Colors.grey[800],
-          ),
-        ],
+      backgroundColor: Colors.black,
+      body: SingleChildScrollView(
+        scrollDirection: Axis.vertical,
+        child: Column(
+          children: [
+            // Image.asset(
+            //   "lib/assets/freshcuttt.png",
+            //   height: _height * .2,
+            // ),
+            SizedBox(
+              height: _height * .37,
+            ),
+            Center(
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: _width * .15),
+                child:
+                    Container(child: Image.asset("lib/assets/freshcuttt.png")),
+              ),
+            ),
+            SizedBox(
+              height: _height * .1,
+            ),
+
+            CircularProgressIndicator(
+              color: Colors.amber[900],
+              strokeWidth: 10.0,
+            ),
+
+            //Sized
+          ],
+        ),
       ),
+
+      // Alignment(child: Image.asset("lib/assets/kwik3.png")),
     );
   }
 }

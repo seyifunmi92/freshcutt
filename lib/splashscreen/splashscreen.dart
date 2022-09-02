@@ -46,15 +46,15 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
+    double _width = MediaQuery.of(context).size.width;
+    double _height = MediaQuery.of(context).size.height;
     return Scaffold(
-      backgroundColor: Colors.black87,
-      body: Column(
-        children: [
-          SizedBox(
-            height: MediaQuery.of(context).size.height * .4,
-          ),
-          Image.asset("lib/assets/cy.jpg"),
-        ],
+      backgroundColor: Colors.black,
+      body: Center(
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: _width * .15),
+          child: Container(child: Image.asset("lib/assets/freshcuttt.png")),
+        ),
       ),
     );
   }
