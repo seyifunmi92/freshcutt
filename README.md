@@ -1,4 +1,4 @@
-# cypress
+# Freshcutt
 
 A new Flutter project.
 
